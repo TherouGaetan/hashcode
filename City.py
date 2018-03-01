@@ -15,10 +15,12 @@ class City:
         parser = ParseFile(file)
         self.initCity(parser.extractDataLine(' '))
         data = parser.extractDataLine(' ')
+        i = 1
         while len(data) != 0:
-            ride = Ride(data)
+            ride = Ride(data, i)
             self._rides.append(ride)
             data = parser.extractDataLine(' ')
+            i += 1
 
     def initCity(self, data):
         self._rows = data[0]
@@ -31,6 +33,7 @@ class City:
         print('Col: ', self._cols)
         print('Max step: ', self._stepMax)
         print('Nb ride: ', len(self._rides))
+        print('Nb Vehicule: ', len(self._fleet))
 
     def algo(self):
         return None
