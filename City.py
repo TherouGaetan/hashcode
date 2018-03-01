@@ -42,28 +42,53 @@ class City:
         print('Nb Vehicule: ', len(self._fleet))
 
     def distanceVehiculeRide(self, vehicule, ride):
-        return abs((vehicule._col - ride._colStart) + (vehicule._row - ride._rowStart))
+        return abs((int(vehicule._col) - int(ride._colStart)) + (int(vehicule._row) - int(ride._rowStart)))
 
     def findVehicule(self):
         ride = self._rides[self._actualRide]
         vehicule = None
         distance = 100000
         for v in self._fleet:
-            if not v.isOnisOnRide:
+            if not v.isOnRide():
                 d = self.distanceVehiculeRide(v, ride)
                 if d < distance:
                     distance = d
                     vehicule = v
         return vehicule
 
+    def nbVehiculeDispo(self):
+        count = 0
+        for v in self._fleet:
+            if not v.isOnRide():
+                count += 1
+        return count
+
     def algo(self):
         step = 0
-        return None
+        self._actualRide = 0
+        while self._actualRide < len(self._rides):
+            print(self._actualRide < len(self._rides), self.nbVehiculeDispo() != 0, int(self._rides[self._actualRide]._start) >= step)
+            while self._actualRide < len(self._rides) and self.nbVehiculeDispo() != 0 and int(self._rides[self._actualRide]._start) >= step:
+                print(self._actualRide < len(self._rides), self.nbVehiculeDispo() != 0, int(self._rides[self._actualRide]._start) >= step)
+                v = self.findVehicule()
+                if v is not None:
+                    v.attributeRide(self._rides[self._actualRide])
+                    self._actualRide += 1
+            for v in self._fleet:
+                if v.isOnRide():
+                    v.move()
+            step += 1
+            if step > self._stepMax:
+                exit(125)
+            print('end boucle')
+        #for v in self._fleet:
+        #    v.print()
 
 
 if __name__ == "__main__":
     city = City()
 
-    # city.parseFile("./a_example.in")
-    city.parseFile("./b_should_be_easy.in")
-    city.printCity()
+    city.parseFile("./a_example.in")
+    # city.parseFile("./b_should_be_easy.in")
+    #city.printCity()
+    city.algo()
