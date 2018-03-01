@@ -23,6 +23,7 @@ class City:
             self._rides.append(ride)
             data = parser.extractDataLine(' ')
             i += 1
+        self._rides.sort()
 
     def initCity(self, data):
         self._rows = data[0]
@@ -55,8 +56,8 @@ class City:
                     vehicule = v
         return vehicule
 
-
     def algo(self):
+        step = 0
         return None
 
 

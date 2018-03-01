@@ -10,3 +10,6 @@ class Ride:
 
     def printRide(self):
         print(self._rowStart, self._colStart, self._rowEnd, self._colEnd, self._start, self._end)
+
+    def __lt__(self, other):
+        return self._start < other._start
