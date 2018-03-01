@@ -25,6 +25,8 @@ class City:
         self._cols = data[1]
         self._bonus = data[4]
         self._stepMax = int(data[5])
+        for i in range (0, data[2]) :
+            list.append(Vehicule(i))
 
     def printCity(self):
         print('Row: ', self._rows)
